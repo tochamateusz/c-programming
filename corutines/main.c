@@ -1,5 +1,4 @@
-
-#include <stdio.h>
+#include "main.h"
 
 typedef struct coroutine_t {
   float elapsed;
@@ -44,14 +43,13 @@ typedef struct coroutine_t {
   }                                                                            \
   while (0)
 
-int main(void) {
+int run() {
   static coroutine_t s_co;
   coroutine_t *co = &s_co;
-
   static int loop_count = 0;
   int keep_going = 1;
 
-  COROUTINE_START(co)
+  COROUTINE_START(co);
 
   COROUTINE_CASE(co, loop_start);
   printf("State 0\n");
@@ -68,7 +66,5 @@ int main(void) {
 
   COROUTINE_END(co);
 
-  printf("test\n");
-
-  return 0;
+  return keep_going;
 }
