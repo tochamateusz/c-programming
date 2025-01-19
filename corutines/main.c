@@ -73,3 +73,54 @@ int run() {
 
   return keep_going;
 }
+
+int run2() {
+  static coroutine_t s_co;
+  coroutine_t *co = &s_co;
+  static int loop_count = 0;
+  int keep_going = 1;
+
+  do {
+    switch (co->index) {
+    default:;
+
+    case 87:
+    loop_start:
+      co->index = 87;
+      ;
+      printf("State 0\n");
+      do {
+        co->index = 92;
+        do {
+          goto __co_end;
+        } while (0);
+      case 92:;
+      } while (0);
+      printf("State 1\n");
+      do {
+        co->index = 100;
+        do {
+          goto __co_end;
+        } while (0);
+      case 100:;
+      } while (0);
+      printf("State 2\n");
+      do {
+        co->index = 108;
+        do {
+          goto __co_end;
+        } while (0);
+      case 108:;
+      } while (0);
+      ++loop_count;
+      if (loop_count == 3) {
+        keep_going = 0;
+      }
+      goto loop_start;
+    }
+    co->index = 0;
+  __co_end:;
+  } while (0);
+
+  return keep_going;
+}
